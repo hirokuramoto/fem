@@ -6,11 +6,11 @@ subroutine check_matrix2(a, c, n)
 
   write(*, *) 'matrix A'
   do i = 1, n
-    write(*, '(8e12.4)') (a(i, j), j = 1, n)
+    write(*, '(11e12.4)') (a(i, j), j = 1, n)
   end do
 
   write(*, *) 'vector c'
-  write(*, '(8e12.4)') (c(i), i = 1, n)
+  write(*, '(11e12.4)') (c(i), i = 1, n)
 
   return
 end subroutine check_matrix2

@@ -1,5 +1,5 @@
 TARGET	=	go
-OBJECTS	=	main.o	stiff.o	ex13.o	ex23.o	check_stiff.o	check_matrix2.o	check_solution.o	gauss_ver4u.o	bound1.o	bound2.o
+OBJECTS	=	main.o	stiff2.o	datain3.o	check_stiff.o	bc2.o	check_matrix2.o	check_solution3.o	gauss_ver4u.o	bound2.o
 F90	=	gfortran
 FFLAGS	=	-O	-fdefault-real-8 -fbounds-check
 COMMON_MOD	=

@@ -6,7 +6,7 @@ subroutine check_stiff(a, n)
 
   write(*, *) 'matrix A'
   do i = 1, n
-    write(*, '(8e10.3)') (a(i, j), j = 1, n)
+    write(*, '(11e10.3)') (a(i, j), j = 1, n)
   end do
 
   return
