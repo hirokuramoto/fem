@@ -9,6 +9,7 @@ subroutine datain3(nnode, coords, nelem, lnods, n_bc_given, i_bc_given, n_bc_non
 
   if (icase == 1) open(10, file='case1.dat')
   if (icase == 2) open(10, file='case2.dat')
+  if (icase == 3) open(10, file='case3.dat')
 
   n_bc_given = 0
   read(10, *) nnode

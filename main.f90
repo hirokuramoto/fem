@@ -14,7 +14,7 @@ program main
 
   call datain3(nnode, coords, nelem, lnods, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v_bc_nonzero, icase)
 
-  call stiff2(a, b, nnode, coords, nelem, lnods)    ! 剛性マトリックスの作成
+  call stiff4(a, b, nnode, coords, nelem, lnods)    ! 剛性マトリックスの作成
   call check_stiff(a, nnode)  ! 剛性マトリックスの確認
 
   call bound2(a, b, nnode, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v_bc_nonzero)
