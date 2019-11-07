@@ -2,7 +2,7 @@ subroutine bound2(a, c, n, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v
   implicit none
   integer(4), intent(in)    :: n, n_bc_given, i_bc_given(*), n_bc_nonzero, i_bc_nonzero(*)
   real(8),    intent(in)    :: v_bc_nonzero(*)
-  real(8),    intent(inout) :: a(n, *), c(*)
+  real(8),    intent(inout) :: a(n, n), c(*)
   integer(4) i, k
 
   ! 右辺の非零成分のみ計算

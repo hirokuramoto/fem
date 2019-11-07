@@ -1,7 +1,7 @@
 subroutine check_matrix2(a, c, n)
   implicit none
   integer(4), intent(in) :: n
-  real(8),    intent(inout) :: a(n, n), c(n)
+  real(8), intent(inout) :: a(n, n), c(n)
   integer(4) i, j
 
   write(*, *) 'matrix A'

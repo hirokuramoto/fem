@@ -1,7 +1,7 @@
 subroutine gauss_ver4u(a, c, n) !三角分解の配列合理化
   implicit none
   integer(4), intent(in) :: n
-  real(8),    intent(inout) :: a(n, n), c(n)
+  real(8),    intent(inout) :: a(n, *), c(n)
   integer(4) i, j, k
   real(8) temp, temp_u, temp_l
 

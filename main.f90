@@ -1,25 +1,41 @@
 program main
   implicit none
-  integer, parameter :: MXNODE = 100       ! parameter属性で初期値を指定
-  integer, parameter :: MXELEM = 100
+  integer, parameter :: MXNODE = 100  ! 総接点数の最大値
+  integer, parameter :: MXELEM = 100  ! 総要素数の最大値
 
-  integer(4) n_bc_given, n_bc_nonzero, i_bc_given(MXNODE), i_bc_nonzero(MXNODE)
-  integer(4) nnode, nelem, lnods(2, MXELEM), icase
-  real(8) a(MXNODE * MXNODE), b(MXNODE), coords(MXNODE), v_bc_nonzero(MXNODE)
-  real(8) t1, t2  ! 時間計測用
+  integer(4) n_bc_given           ! 境界条件の全数
+  integer(4) n_bc_nonzero         ! 非零の境界条件の数
+  integer(4) i_bc_given(MXNODE)   ! 境界条件のインデックス
+  integer(4) i_bc_nonzero(MXNODE) ! 非零の境界条件のインデックス
+  integer(4) nnode                ! 総節点数
+  integer(4) nelem                ! 総要素数
+  integer(4) lnods(2, MXELEM)     ! コネクティビティ
+  integer(4) nint                 ! ガウス積分のサンプル点数
+  integer(4) icase
+  real(8)    a(MXNODE * MXNODE)   ! 全体剛性マトリックス
+  real(8)    b(MXNODE)            ! 全体Fベクトル
+  real(8)    coords(MXNODE)       ! 節点座標
+  real(8)    v_bc_nonzero(MXNODE) ! 非零の境界条件の値
+  real(8)    astiff(2, 2)         ! 要素マトリックス
+  real(8)    c(2)                 ! 要素Fベクトル
+  real(8)    t1, t2               ! 時間計測用
 
   call cpu_time(t1)
 
   icase = 2
 
-  call datain3(nnode, coords, nelem, lnods, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v_bc_nonzero, icase)
+  ! データファイルの読み込み
+  call datain5(nnode, coords, nelem, lnods, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v_bc_nonzero, icase, nint)
 
-  call stiff4(a, b, nnode, coords, nelem, lnods)    ! 剛性マトリックスの作成
-  call check_stiff(a, nnode)  ! 剛性マトリックスの確認
+  ! 剛性マトリックスの作成
+  call stiff5(a, b, nnode, coords, nelem, lnods, astiff, c, nint)
+  call check_stiff(a, nnode)
 
+  ! 境界条件処理
   call bound2(a, b, nnode, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v_bc_nonzero)
   call check_matrix2(a, b, nnode)
 
+  ! ガウスの消去法
   call gauss_ver4u(a, b, nnode)
   call check_solution3(b, nnode, coords, icase)
 
