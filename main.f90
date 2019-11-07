@@ -16,8 +16,9 @@ program main
   real(8)    b(MXNODE)            ! 全体Fベクトル
   real(8)    coords(MXNODE)       ! 節点座標
   real(8)    v_bc_nonzero(MXNODE) ! 非零の境界条件の値
-  real(8)    astiff(2, 2)         ! 要素マトリックス
-  real(8)    c(2)                 ! 要素Fベクトル
+  real(8)    ntnoel(MXELEM)       ! 各要素の節点数
+  real(8)    astiff(3, 3)         ! 要素マトリックス
+  real(8)    c(3)                 ! 要素Fベクトル
   real(8)    t1, t2               ! 時間計測用
 
   call cpu_time(t1)
@@ -25,10 +26,10 @@ program main
   icase = 2
 
   ! データファイルの読み込み
-  call datain5(nnode, coords, nelem, lnods, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v_bc_nonzero, icase, nint)
+  call datain6(nnode, coords, nelem, lnods, n_bc_given, i_bc_given, n_bc_nonzero, i_bc_nonzero, v_bc_nonzero, icase, nint, ntnoel)
 
   ! 剛性マトリックスの作成
-  call stiff5(a, b, nnode, coords, nelem, lnods, astiff, c, nint)
+  call stiff6(a, b, nnode, coords, nelem, lnods, astiff, c, nint, ntnoel)
   call check_stiff(a, nnode)
 
   ! 境界条件処理
@@ -37,7 +38,7 @@ program main
 
   ! ガウスの消去法
   call gauss_ver4u(a, b, nnode)
-  call check_solution3(b, nnode, coords, icase)
+  call check_solution6(b, nnode, coords, icase)
 
   call cpu_time(t2)
   write(*, *) "cpu time =", t2 - t1
